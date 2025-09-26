@@ -1,0 +1,30 @@
+﻿@model IEnumerable<coba.Models.Pegawai>
+
+@{
+    ViewData["Title"] = "Halaman Admin";
+}
+
+<h2>Selamat Datang, @ViewData["NamaAdmin"] 👋</h2>
+<p>Anda login sebagai <b>Admin</b></p>
+
+
+<hr />
+
+<h3>Data Pegawai</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Nama Pegawai</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pegawai in Model)
+        {
+            <tr>
+                <td>@pegawai.Username</td>
+                <td>@pegawai.NamaPegawai</td>
+            </tr>
+        }
+    </tbody>
+</table>

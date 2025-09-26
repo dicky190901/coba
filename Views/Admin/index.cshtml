@@ -1,0 +1,82 @@
+﻿@model IEnumerable<coba.Models.Pegawai>
+
+@{
+    ViewData["Title"] = "Halaman Admin";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">Selamat Datang, @ViewData["NamaAdmin"] 👋</h2>
+    <p>Anda login sebagai <b>Admin</b></p>
+
+    <div class="mb-3">
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-sm btn-outline-danger">Logout</a>
+        <a asp-action="Create" class="btn btn-sm btn-success">+ Tambah Pegawai</a>
+    </div>
+
+    <hr />
+
+    <h4 class="mb-3">📋 Data Pegawai</h4>
+
+    <table id="pegawaiTable" class="table table-hover table-striped table-bordered shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Nama Pegawai</th>
+                <th>Jabatan</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                var no = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@no</td>
+                        <td>@item.Username</td>
+                        <td>@item.NamaPegawai</td>
+                        <td>@item.Jabatan</td>
+                        <td>
+                            <a asp-controller="Pegawais" asp-action="Edit" asp-route-id="@item.IdPegawai" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-controller="Pegawais" asp-action="Details" asp-route-id="@item.IdPegawai" class="btn btn-sm btn-info">Details</a>
+                            <a asp-controller="Pegawais" asp-action="Delete" asp-route-id="@item.IdPegawai" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Yakin mau hapus user ini?');">Delete</a>
+                        </td>
+                    </tr>
+                    no++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">Tidak ada data pegawai</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#pegawaiTable').DataTable({
+                dom: 'Bfrtip', // aktifkan tombol
+                buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                language: {
+                    search: "Cari Pegawai:",
+                    lengthMenu: "Tampilkan _MENU_ data",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    paginate: {
+                        next: "›",
+                        previous: "‹"
+                    }
+                }
+            });
+        });
+    </script>
+}
